@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-string stringDiff(int difference){
+string stringDiff(int inputSeconds){
     string ans = "";
     vector<string> unitNames ({"year", "month", "day", "hour", "minute", 
         "second"
@@ -23,28 +23,27 @@ string stringDiff(int difference){
     vector<int> unitValues ({}); //answers go here
     for (int dc = 0; dc < deflator.size(); dc++){
         int d = deflator.at(dc);
-        if (difference >= d){ 
-            unitValues.push_back(difference/d);
-            difference %= d;
+        if (inputSeconds >= d){ 
+            unitValues.push_back(inputSeconds/d);
+            inputSeconds %= d;
         }
         else{
             unitValues.push_back(0);
         }
     }
     //remaining seconds added
-    unitValues.push_back(difference);
+    unitValues.push_back(inputSeconds);
     
-    for (int asd : unitValues){
-    }
     for (int v = 0; v < unitValues.size(); v++){
-       ans.append(to_string(unitValues.at(v)) + " " + unitNames.at(v) + ((unitValues.at(v)>1||unitValues.at(v)==0)?"s":"") + " ");
+       ans.append((unitValues.at(v)==0)?"":(to_string(unitValues.at(v)) 
+       + " " + unitNames.at(v) + (unitValues.at(v)>1?"s":"") + " "));
     }
     return ans;
 }
 int main(){
-    vector<int> testVals ({60,61,3601,(24*3600),(20*24*3600),(2*30*24*3600),(3*12*30*24*3600 + 7200 + 3)});
-    for (int v : testVals){
-        cout << stringDiff(v) << endl;
-    }
+        int inp;
+        cout << "Enter a number of seconds to convert into other units: (max 69 years)" << endl;
+        cin >> inp;
+        cout << stringDiff(inp) << endl;
     return 0;
 }
