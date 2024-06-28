@@ -7,40 +7,44 @@ using namespace std;
 
 string stringDiff(int difference){
     string ans = "";
-    vector<string> unitNames ({"second", "minute", "hour", "day", "month", "year"});
-    vector<int> deflatorUnits ({12,30,24,60,60,60});
-    vector<int> deflator({60});
+    vector<string> unitNames ({"year", "month", "day", "hour", "minute", 
+        "second"
+    });
+    vector<int> deflatorUnits ({12,30,24,60,60});
+    vector<int> deflator({});
     for (int c = 0; c < deflatorUnits.size(); c++){
-        int x = deflatorUnits.at(c);
-        deflator.push_back(x);
+        int x = 1;
         for (int c1 = c ; c1 < deflatorUnits.size(); c1++){
             x*=deflatorUnits.at(c1);
         }
+        deflator.push_back(x);
     }
-    cout << "testing deflator values: " << endl;
-    for (int dx : deflator){
-        cout << dx << endl;
+
+    vector<int> unitValues ({}); //answers go here
+    for (int dc = 0; dc < deflator.size(); dc++){
+        int d = deflator.at(dc);
+        if (difference >= d){ 
+            unitValues.push_back(difference/d);
+            difference %= d;
+        }
+        else{
+            unitValues.push_back(0);
+        }
     }
-    vector<int> unitValues (5);
-    for (int d : deflator){
-        unitValues.push_back(difference/d);
-        //cout << difference << " " << d << " " << difference/d <<  " " << difference%d << endl;
-        difference = difference % d;
-        //cout << "new diff af mod : " << difference << endl;
-        //if (difference == 0){
-         //   continue;
-        //}
+    //remaining seconds added
+    unitValues.push_back(difference);
+    
+    for (int asd : unitValues){
     }
     for (int v = 0; v < unitValues.size(); v++){
-       //ans.append(unitValues.at(v) + " " + unitNames.at(v) + (unitValues.at(v)>1?"s":"") + " ");
+       ans.append(to_string(unitValues.at(v)) + " " + unitNames.at(v) + ((unitValues.at(v)>1||unitValues.at(v)==0)?"s":"") + " ");
     }
     return ans;
 }
 int main(){
-    //vector<int> testVals ({60,61,3601,(24*3600),(20*24*3600),(2*30*24*3600),(3*12*30*24*3600)});
-    vector<int>testVals ({3601});
+    vector<int> testVals ({60,61,3601,(24*3600),(20*24*3600),(2*30*24*3600),(3*12*30*24*3600 + 7200 + 3)});
     for (int v : testVals){
-        cout << v << " in words: " << stringDiff(v) << endl;
+        cout << stringDiff(v) << endl;
     }
     return 0;
 }
