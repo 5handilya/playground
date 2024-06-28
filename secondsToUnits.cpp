@@ -1,3 +1,8 @@
+//simple program that turns int seconds into years, months, days, hours, minutes, seconds
+//wrote this chilling/watching the US presidential debate 2024 (trump-biden)
+//theyre saying they might change the democratic candidate
+//28-6-24
+
 #include <stdio.h>
 #include <iostream>
 #include <math.h>
